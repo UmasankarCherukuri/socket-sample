@@ -9,7 +9,9 @@ app.get("/", function (req, res) {
 
 io.on("connection", function (socket) {
   socket.on("chat message", function (msg) {
-    io.emit("chat message", process.env.samplekey);
+    if (process.env[msg])
+      io.emit("chat message", `true-${msg}:${process.env[msg]}`);
+    else io.emit("chat message", "false");
   });
 });
 
